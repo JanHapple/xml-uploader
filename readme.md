@@ -4,7 +4,10 @@
 This tool provides a command-line programm that processes xml data to a configurable database. The database can be 
 configured in the .env file to the database service of your choice with the DATABASE_URL. XML data can be processed from
 local filesystem within the programm or from an external uri. To test the application there are feed.xml and feed1.xml files
-in the root of the filesystem as well as in the 
+in the root of the filesystem as well as in the public directory of the project. You can retrieve the given xml files with
+relative filepath within your application or with the following links after starting the aaplication:
+- https://xmluploader.ddev.site/feed.xml
+- https://xmluploader.ddev.site/feed1.xml
 
 ### Start the program
 To test the programm, you need to have docker running on your local environment. The programm is build up with DDEV for 
