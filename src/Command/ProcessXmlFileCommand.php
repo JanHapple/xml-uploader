@@ -52,7 +52,14 @@ class ProcessXmlFileCommand extends Command
         }
         
         if(filter_var($pathToFile, FILTER_VALIDATE_URL)) {
-            $fileContent = file_get_contents($pathToFile);
+            try {
+                $fileContent = file_get_contents($pathToFile);
+            } catch (\Exception $e) {
+                $this->logger->error("The xml file couldn't be downloaded with the given uri path: $pathToFile.");
+                $io->error('The xml file could not be downloaded. The requested file was not found.');
+                return Command::FAILURE;
+            }
+
             if(empty($fileContent)) {
                 $this->logger->error("The xml file couldn't be downloaded with the given uri path: $pathToFile.");
                 $io->error('The xml file could not be downloaded. The requested file was not found.');

@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class XmlCommandTest extends KernelTestCase
@@ -19,9 +20,9 @@ class XmlCommandTest extends KernelTestCase
             'filePath' => './feed.xml'
         ]);
 
-        $commandTester->assertCommandIsSuccessful();
         $output = $commandTester->getDisplay();
 
+        $commandTester->assertCommandIsSuccessful();
         $this->assertStringContainsString('Your xml data has successfully been stored to the database.', $output);
     }
 
@@ -53,6 +54,7 @@ class XmlCommandTest extends KernelTestCase
             'filePath' => './test/feed.xml'
         ]);
 
+        $this->assertEquals(Command::FAILURE, $commandTester->getStatusCode());
         $output = $commandTester->getDisplay();
 
         $this->assertStringContainsString('The xml file could not be downloaded. The requested file was not found.', $output);
@@ -69,7 +71,7 @@ class XmlCommandTest extends KernelTestCase
             'filePath' => 'https://xmluploader.ddev.site/test/feed.xml'
         ]);
 
-        $commandTester->assertCommandIsSuccessful();
+        $this->assertEquals(Command::FAILURE, $commandTester->getStatusCode());
         $output = $commandTester->getDisplay();
 
         $this->assertStringContainsString('The xml file could not be downloaded. The requested file was not found.', $output);

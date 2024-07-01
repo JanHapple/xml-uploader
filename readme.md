@@ -19,7 +19,12 @@ After building the environment of the programm, install all dependencies with:
 ddev composer install
 ```
 
-Then start trying the program.
+Than migrate the database schema with:
+```
+ddev php bin/console doctrine:migrations:migrate
+```
+
+After everything is set up, start trying the program.
 
 ### The command
 You can run the Command with 
@@ -43,9 +48,19 @@ Truncates the database entries before processing the file.
 
 ### Tests 
 The provided tests for the commands are reduced to the most essential due to the fact that 
-these test were my first experience with testing.
+these tests were my first experience with testing.
 
-You can run the tests with the following command
+To run the tests you first have to create a testing database.
+```
+ddev php bin/console --env=test doctrine:database:create
+```
+
+After the testing database ist created, please migrate the database schema:
+```
+ddev php bin/console --env=test doctrine:migrations:migrate
+```
+
+After everything is set up, run the tests with the following command:
 ```
 ddev php bin/phpunit
 ```
